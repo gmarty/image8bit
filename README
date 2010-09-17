@@ -1,9 +1,10 @@
 image8bit
+
 jQuery plugin to give images the aspect of good old 8-bit graphics.
-The original img tag is replaced by a canvas tag, thus breaking jQuery fluent interface.
+The original <img> tag is replaced by a <canvas> tag, thus breaking jQuery fluent interface.
 
 How to use?
-$("img").image8bit({blocksize : 5, granularity : 16});
+	$("img").image8bit({blocksize : 5, granularity : 16});
 
 'blocksize' is the pixel size for the mosaic effect.
 'granularity' limits palette color number (the higher, the fewer colors it gives).
