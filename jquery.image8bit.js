@@ -42,6 +42,9 @@
 					color,
 					max,
 					min,
+					r,
+					g,
+					b,
 					h,
 					s,
 					l,
@@ -71,33 +74,33 @@
 						}
 
 						// Convert color from RGB to HSL.
-						color = [color[0]/255, color[1]/255, color[2]/255];
-						max = Math.max(color[0], color[1], color[2]);
-						min = Math.min(color[0], color[1], color[2]);
+						r = color[0] / 255;
+						g = color[1] / 255;
+						b = color[2] / 255;
+						max = Math.max(r, g, b);
+						min = Math.min(r, g, b);
 						h = s = 0;
 						l = (max + min) / 2;
 						if (max !== min) {
 							d = max - min;
-							s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+							s = l > 0.5 ? d / (2 - max - min) : d / l * 2;
 							switch (max) {
-							case color[0]:
-								h = (color[1] - color[2]) / d + (color[1] < color[2] ? 6 : 0);
+							case r:
+								h = (g - b) / d + (g < b ? 6 : 0);
 								break;
-							case color[1]:
-								h = (color[2] - color[0]) / d + 2;
+							case g:
+								h = (b - r) / d + 2;
 								break;
 							default:
-								h = (color[0] - color[1]) / d + 4;
-								break;
+								h = (r - g) / d + 4;
 							}
-							h /= 6;
 						}
-						color = [h, s, l];
 
 						// Apply granularity.
-						color[0] = Math.round(color[0] / params.granularity * 100) * params.granularity * 3.6;
-						color[1] = Math.round(color[1] / params.granularity * 100) * params.granularity + "%";
-						color[2] = Math.round(color[2] / params.granularity * 100) * params.granularity;
+						color = [r, g, b];
+						color[0] = Math.round(h / 6 / params.granularity * 100) * params.granularity * 3.6;
+						color[1] = Math.round(s / params.granularity * 100) * params.granularity + "%";
+						color[2] = Math.round(l / params.granularity * 100) * params.granularity;
 						context.fillStyle = "hsl(" + color.join(",") + "%)";
 						context.fillRect(x, y, params.blocksize, params.blocksize);
 					}
