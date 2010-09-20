@@ -20,35 +20,35 @@
 (function($, document, sCanvas, s2d) {
 	$.fn.image8bit = function(params) {
 		// Check for <canvas> support first.
-		if (document.createElement(sCanvas).getContext) {
-			params = $.extend({
-				blocksize : 5,
-				granularity : 16
-			}, params);
+		params = $.extend({
+			blocksize : 5,
+			granularity : 16
+		}, params);
 
-			$(this).each(function() {
-				var $this = $(this),
-					image = $this[0],
-					width = $this.width(),
-					height = $this.height(),
-					canvas = document.createElement(sCanvas),
-					pixel = document.createElement(sCanvas),
-					context,
-					pixelContext,
-					blockSizeX,
-					blockSizeY,
-					y,
-					x,
-					color,
-					max,
-					min,
-					r,
-					g,
-					b,
-					h,
-					s,
-					l,
-					d;
+		$(this).each(function() {
+			var $this = $(this),
+				image = $this[0],
+				width = $this.width(),
+				height = $this.height(),
+				canvas = document.createElement(sCanvas),
+				pixel = document.createElement(sCanvas),
+				context,
+				pixelContext,
+				blockSizeX,
+				blockSizeY,
+				y,
+				x,
+				color,
+				max,
+				min,
+				r,
+				g,
+				b,
+				h,
+				s,
+				l,
+				d;
+			if (canvas.getContext && image.tagName === "IMG") {
 				canvas.width = width;
 				canvas.height = height;
 				context = canvas.getContext(s2d);
@@ -97,16 +97,17 @@
 						}
 
 						// Apply granularity.
-						color = [r, g, b];
-						color[0] = Math.round(h / 6 / params.granularity * 100) * params.granularity * 3.6;
-						color[1] = Math.round(s / params.granularity * 100) * params.granularity + "%";
-						color[2] = Math.round(l / params.granularity * 100) * params.granularity;
+						color = [
+							Math.round(h / 6 / params.granularity * 100) * params.granularity * 3.6,
+							Math.round(s / params.granularity * 100) * params.granularity + "%",
+							Math.round(l / params.granularity * 100) * params.granularity
+						];
 						context.fillStyle = "hsl(" + color.join(",") + "%)";
 						context.fillRect(x, y, params.blocksize, params.blocksize);
 					}
 				}
 				$this.replaceWith(canvas);
-			});
-		}
+			}
+		});
 	};
 })(jQuery, document, "canvas", "2d");

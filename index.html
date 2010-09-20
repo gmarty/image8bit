@@ -7,10 +7,10 @@
 <body>
 <img src="img/RGB_24bits_palette_color_test_chart.png" />
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.js"></script>
-<script src="jquery.image8bit.js"></script>
+<script src="jquery.image8bit.min.js"></script>
 <script>
 $(document).ready(function() {
-	$("img").image8bit({
+	$("img, script, body").image8bit({
 		blocksize : 5,
 		granularity : 16
 	});
