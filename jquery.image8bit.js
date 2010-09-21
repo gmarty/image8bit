@@ -103,7 +103,7 @@
 							Math.round(l / params.granularity * 100) * params.granularity
 						];
 						context.fillStyle = "hsl(" + color.join(",") + "%)";
-						context.fillRect(x, y, params.blocksize, params.blocksize);
+						context.fillRect(x, y, blockSizeX, blockSizeY);
 					}
 				}
 				$this.replaceWith(canvas);
