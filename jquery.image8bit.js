@@ -17,7 +17,7 @@
  * @todo: Apply reusable attributes (style, id, class...) from the original img to the canvas.
  * @todo: use jQuery load() to ensure the image is loaded before processing (required?).
  */
-(function($, document, sCanvas, s2d) {
+(function($, document, Math, sCanvas, s2d) {
 	$.fn.image8bit = function(params) {
 		// Check for <canvas> support first.
 		params = $.extend({
@@ -57,12 +57,8 @@
 				for (y = 0; y < height; y += params.blocksize) {
 					for (x = 0; x < width; x += params.blocksize) {
 						blockSizeX = blockSizeY = params.blocksize;
-						if (blockSizeX + x > width) {
-							blockSizeX = width - x;
-						}
-						if (blockSizeY + y > height) {
-							blockSizeY = height - y;
-						}
+						blockSizeX = blockSizeX + x > width ? width - x : blockSizeX;
+						blockSizeY = blockSizeY + y > height ? height - y : blockSizeY;
 
 						// Draw block to a 1x1 px tmp canvas element to extract mean color.
 						pixelContext.drawImage(image, x, y, blockSizeX, blockSizeY, 0, 0, 1, 1);
@@ -110,4 +106,4 @@
 			}
 		});
 	};
-})(jQuery, document, "canvas", "2d");
+})(jQuery, document, Math, "canvas", "2d");
